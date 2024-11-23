@@ -27,7 +27,7 @@ public class ResumeBuilder {
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
 
             switch (choice) {
                 case 1 -> enterPersonalInformation(scanner);
@@ -49,10 +49,25 @@ public class ResumeBuilder {
     private static void enterPersonalInformation(Scanner scanner) {
         System.out.print("Enter your full name: ");
         name = scanner.nextLine();
-        System.out.print("Enter your email address: ");
-        email = scanner.nextLine();
-        System.out.print("Enter your phone number: ");
-        phone = scanner.nextLine();
+
+        while (true) {
+            System.out.print("Enter your email address: ");
+            email = scanner.nextLine();
+            if (isValidEmail(email)) {
+                break;
+            } else {
+                System.out.println("Invalid email format. Please try again.");
+            }
+        }
+        while (true) {
+            System.out.print("Enter your phone number (must start with 91 and have 10 digits): ");
+            phone = scanner.nextLine();
+            if (isValidPhoneNumber(phone)) {
+                break;
+            } else {
+                System.out.println("Invalid phone number. Please enter a valid number starting with 91.");
+            }
+        }
     }
 
     private static void addEducation(Scanner scanner) {
@@ -113,5 +128,13 @@ public class ResumeBuilder {
             System.out.println("An error occurred while generating the resume.");
             e.printStackTrace();
         }
+    }
+
+    private static boolean isValidEmail(String email) {
+        return email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$");
+    }
+
+    private static boolean isValidPhoneNumber(String phone) {
+        return phone.matches("^91[0-9]{10}$");
     }
 }
